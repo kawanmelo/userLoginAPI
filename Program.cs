@@ -23,6 +23,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapMethods(UserGetByEmail.TemplateUserByEmail, UserGetByEmail.MetodoUserByEmail, UserGetByEmail.FuncUserByEmail);
 app.MapMethods(UserGetByName.TemplateUserByName, UserGetByName.MetodoUserByName, UserGetByName.FuncUserByName);
 app.MapMethods(UserDelete.TemplateUserDelete, UserDelete.MetodoUserDelete, UserDelete.FuncUserDelelte);
 app.MapMethods(UserPost.TemplateUserPost, UserPost.MetodoUserPost, UserPost.FuncUserPost);
