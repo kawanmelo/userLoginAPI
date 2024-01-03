@@ -1,7 +1,7 @@
 # Projeto de API CRUD em C#
 
 ## Descrição
-Este é um projeto pessoal de uma API em C# que realiza operações CRUD (Create, Read, Update, Delete) em um banco de dados. A API gerencia informações de usuários, permitindo a criação, recuperação, atualização e exclusão de registros.
+Este é um projeto de uma API em C# que realiza operações CRUD (Create, Read, Update, Delete) em um banco de dados. A API gerencia informações de usuários, permitindo a criação, recuperação, atualização e exclusão de registros.
 
 ## Estrutura do Projeto
 
