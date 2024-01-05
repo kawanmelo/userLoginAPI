@@ -26,12 +26,20 @@ namespace MeloSolution.authenticationAPI.Endpoints{
 */
         public static IResult ActionUserPost([FromBody] User user){
             try{
+                consumeData = new ConsumeData();
+                int verificationName = consumeData.ConsumeInfoInteger($"SELECT UserId FROM dbo.UserData WHERE Name = '{user.Name}' ");
+                int verificationEmail = consumeData.ConsumeInfoInteger($"SELECT UserId FROM dbo.UserData WHERE Email = '{user.Email}' ");
+                if(verificationName > 0){
+                    return Results.Conflict("User creation failed, the username provided already exists.");
+                }
+                if(verificationEmail > 0){
+                    return Results.Conflict("User creation failed, the email provided already exists.");
+                }
                 cud = new CudUSer();
                 // Execução da interação com o banco de dados (recebe True se ao menos uma linha do banco foi afetada).
                 bool persistenceConference = cud.CudObject("INSERT INTO dbo.UserData (Name, Email, Password) VALUES (@Name, @Email, @Password)",
                 new {Name = user.Name, Email = user.Email, Password = user.Password});
                 if(persistenceConference){
-                    consumeData = new ConsumeData();
                     // Recupera o ID do usuário recém-criado no banco.
                     int ID = consumeData.ConsumeInfoInteger("SELECT MAX(UserId) FROM dbo.UserData");
                     consumeObject = new ConsumeUser();
@@ -41,7 +49,6 @@ namespace MeloSolution.authenticationAPI.Endpoints{
                     return Results.Created($"https://localhost:7120/advice/{ID}", userFound);
                 }
             }catch(Exception e){
-                Console.WriteLine("MeloSolution.authenticationAPI.Endpoints.UserPost");
                 Console.WriteLine(e.Message);
             }
             return Results.BadRequest();
