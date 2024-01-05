@@ -29,7 +29,6 @@ namespace MeloSolution.authenticationAPI.Endpoints{
                     return Results.NoContent();
                 }
             }catch(Exception e){
-                Console.WriteLine("MeloSolution.authenticationAPI.Endpoints.UserDelete");
                 Console.WriteLine(e.Message);
             }
             // Retorna um resultado de solicitação inválida (400 Bad Request) em caso de falha na exclusão.

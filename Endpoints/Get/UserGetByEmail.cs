@@ -28,7 +28,6 @@ namespace MeloSolution.authenticationAPI.Endpoints{
                     return Results.Ok(userFound);
                 }
             }catch(Exception e){
-                Console.WriteLine("MeloSolution.autenticationAPI.Endpoints");
                 Console.WriteLine(e.Message);
             }
             // Retorna um resultado NotFound (404 Not Found) se o usuário não for encontrado.
