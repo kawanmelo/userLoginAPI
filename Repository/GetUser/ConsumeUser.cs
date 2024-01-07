@@ -21,12 +21,12 @@ public class ConsumeUser:IConsumeObject{
             using(SqlConnection sqlConnection = new SqlConnection(connectionString)){
                 sqlConnection.Open();
                 using(SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection)){
-                    using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
-                        if(parameters != null){
+                    if(parameters != null){
                             foreach(var prop in parameters.GetType().GetProperties()){
                                 sqlCommand.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(parameters));
                             }
                         }
+                    using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
                         while(sqlDataReader.Read()){
                             int Id = sqlDataReader.GetInt32(0);
                             string Name = sqlDataReader.GetString(1);
@@ -50,12 +50,12 @@ public class ConsumeUser:IConsumeObject{
             using(SqlConnection sqlConnection = new SqlConnection(connectionString)){
                 sqlConnection.Open();
                 using(SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection)){
-                    using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
-                        if(parameters != null){
+                    if(parameters != null){
                             foreach(var prop in parameters.GetType().GetProperties()){
                                 sqlCommand.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(parameters));
                             }
                         }
+                    using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
                         while(sqlDataReader.Read()){
                             int Id = sqlDataReader.GetInt32(0);
                             string Name = sqlDataReader.GetString(1);

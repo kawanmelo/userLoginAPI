@@ -22,7 +22,8 @@ namespace MeloSolution.authenticationAPI.Endpoints{
             try{
                 consumeObject = new ConsumeUser();
                 // Executa a consulta no banco de dados para recuperar um usuário com o email fornecido.
-                var userFound = consumeObject.ConsumeUniqueObject($"SELECT * FROM dbo.UserData WHERE Email LIKE '{email}'");
+                var userFound = consumeObject.ConsumeUniqueObject("SELECT * FROM dbo.UserData WHERE Email = @Email",
+                new{ Email = email });
                 if(userFound != null){
                     // Retorna um resultado Ok (200 OK) com os detalhes do usuário se encontrado.
                     return Results.Ok(userFound);

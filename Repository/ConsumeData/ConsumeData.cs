@@ -15,18 +15,15 @@ namespace MeloSolution.authenticationAPI.Repository
             int value =0;
             try{
                 string connectionString = configuration.GetConnectionString("ProverbsDataBankConnection");
-                if(String.IsNullOrEmpty(connectionString)){
-                    throw new Exception("String de conexão vazia.");
-                }
                 using(SqlConnection sqlConnection = new SqlConnection(connectionString)){
                     sqlConnection.Open();
                     using(SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection)){
-                        using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
-                            if(parameters != null){
+                        if(parameters != null){
                                 foreach(var prop in parameters.GetType().GetProperties()){
                                     sqlCommand.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(parameters));
                                 }
                             }
+                        using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
                             while(sqlDataReader.Read()){
                                value = sqlDataReader.GetInt32(0);
                                return value;
@@ -43,18 +40,15 @@ namespace MeloSolution.authenticationAPI.Repository
             string value="";
             try{
                 string connectionString = configuration.GetConnectionString("ProverbsDataBankConnection");
-                if(String.IsNullOrEmpty(connectionString)){
-                    throw new Exception("String de conexão vazia.");
-                }
                 using(SqlConnection sqlConnection = new SqlConnection(connectionString)){
                     sqlConnection.Open();
                     using(SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection)){
-                        using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
-                            if(parameters != null){
+                        if(parameters != null){
                                 foreach(var prop in parameters.GetType().GetProperties()){
                                     sqlCommand.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(parameters));
                                 }
                             }
+                        using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader()){
                             while(sqlDataReader.Read()){
                                value = sqlDataReader.GetString(0);
                                return value;

@@ -27,8 +27,10 @@ namespace MeloSolution.authenticationAPI.Endpoints{
         public static IResult ActionUserPost([FromBody] User user){
             try{
                 consumeData = new ConsumeData();
-                int verificationName = consumeData.ConsumeInfoInteger($"SELECT UserId FROM dbo.UserData WHERE Name = '{user.Name}' ");
-                int verificationEmail = consumeData.ConsumeInfoInteger($"SELECT UserId FROM dbo.UserData WHERE Email = '{user.Email}' ");
+                int verificationName = consumeData.ConsumeInfoInteger("SELECT UserId FROM dbo.UserData WHERE Name = @Name ",
+                new{ Name = user.Name });
+                int verificationEmail = consumeData.ConsumeInfoInteger("SELECT UserId FROM dbo.UserData WHERE Email = @Email ",
+                new{ Email = user.Email });
                 if(verificationName > 0){
                     return Results.Conflict("User creation failed, the username provided already exists.");
                 }
@@ -40,13 +42,14 @@ namespace MeloSolution.authenticationAPI.Endpoints{
                 bool persistenceConference = cud.CudObject("INSERT INTO dbo.UserData (Name, Email, Password) VALUES (@Name, @Email, @Password)",
                 new {Name = user.Name, Email = user.Email, Password = user.Password});
                 if(persistenceConference){
-                    // Recupera o ID do usuário recém-criado no banco.
-                    int ID = consumeData.ConsumeInfoInteger("SELECT MAX(UserId) FROM dbo.UserData");
+                    // Recupera o Id do usuário recém-criado no banco.
+                    int Id = consumeData.ConsumeInfoInteger("SELECT MAX(UserId) FROM dbo.UserData");
                     consumeObject = new ConsumeUser();
                     // Recupera o usuário recém-criado no banco.
-                    var userFound = consumeObject.ConsumeUniqueObject($"SELECT * FROM dbo.UserData WHERE UserId = {ID}");
+                    var userFound = consumeObject.ConsumeUniqueObject("SELECT * FROM dbo.UserData WHERE UserId = @UserId",
+                    new{ UserId = Id });
                     // Retorna um resultado de criação com o URI do novo usuário e os detalhes do usuário.
-                    return Results.Created($"https://localhost:7120/advice/{ID}", userFound);
+                    return Results.Created($"https://localhost:7120/advice/{Id}", userFound);
                 }
             }catch(Exception e){
                 Console.WriteLine(e.Message);

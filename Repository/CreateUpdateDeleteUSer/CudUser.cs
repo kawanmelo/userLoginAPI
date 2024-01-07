@@ -14,9 +14,6 @@ namespace MeloSolution.authenticationAPI.Repository{
         public bool CudObject(string sqlQuery, object parameters = null){
             try{
                 string connectionString = configuration.GetConnectionString("ProverbsDataBankConnection");
-                if(String.IsNullOrEmpty(connectionString)){
-                    throw new Exception("String de conexão vazia.");
-                }
                 using(SqlConnection sqlConnection = new SqlConnection(connectionString)){
                     sqlConnection.Open();
                     using(SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection)){
