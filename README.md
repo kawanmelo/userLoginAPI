@@ -72,10 +72,11 @@ Este é um projeto de uma API em C# que realiza operações CRUD (Create, Read, 
 #### CudUser
 - **Descrição:** Lógica para operações CUD (Create, Update, Delete) no banco.
 
-### CreateObject
-
 #### CreateUser
 - **Descrição:** Lógica para criação de instância de usuário.
+
+#### ConsumeUser
+- **Descrição:** Lógica para consumir usuários do banco.
 
 ## Autor
 Kawan Guilherme Cabral de Melo.
